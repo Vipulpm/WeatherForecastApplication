@@ -26,7 +26,7 @@ namespace WeatherForecastApplication.Controllers
                 return View();
             }
 
-            string apiKey = "ca0b7d7c84f31afbd4050ecac4490e77";
+            string apiKey = "ca0b7d7c84f31afbd4050ecac4490e77"; // <= I have use my key here; You can use your own =>;
             string url = $"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric";
 
             HttpResponseMessage response = await _httpClient.GetAsync(url);
