@@ -1,0 +1,30 @@
+﻿@model WeatherForecastApplication.Models.WeatherData
+@{
+    ViewData["Title"] = "Weather";
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Weather</title>
+</head>
+<body>
+    @if (Model != null)
+    {
+        <h2>Weather in @Model.Name</h2>
+        <p>Temperature: @Model.Main.Temp &deg;C</p>
+        <p>Pressure: @Model.Main.Pressure hPa</p>
+        <p>Humidity: @Model.Main.Humidity %</p>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    }
+</body>
+</html>
