@@ -11,10 +11,19 @@
 <body>
     @if (Model != null)
     {
-        <h2>Weather in @Model.Name</h2>
+        <h2>Weather in @Model.Name (@Model.Sys.Country)</h2>
         <p>Temperature: @Model.Main.Temp &deg;C</p>
+        <p>Feels Like: @Model.Main.FeelsLike &deg;C</p>
+        <p>Min Temperature: @Model.Main.TempMin &deg;C</p>
+        <p>Max Temperature: @Model.Main.TempMax &deg;C</p>
         <p>Pressure: @Model.Main.Pressure hPa</p>
         <p>Humidity: @Model.Main.Humidity %</p>
+        <p>Wind Speed: @Model.Wind.Speed m/s</p>
+        <p>Wind Direction: @Model.Wind.Deg &deg;</p>
+        <p>Visibility: @Model.Visibility m</p>
+        <p>Cloudiness: @Model.Clouds.All %</p>
+        <p>Sunrise: @Model.Sys.Sunrise</p>
+        <p>Sunset: @Model.Sys.Sunset</p>
     }
 
     @if (!ViewData.ModelState.IsValid)
