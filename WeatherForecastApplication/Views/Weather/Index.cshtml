@@ -1,4 +1,6 @@
 ﻿@model WeatherForecastApplication.Models.WeatherData
+@using static WeatherForecastApplication.Extensions.DateTimeExtension
+
 @{
     ViewData["Title"] = "Weather";
 }
@@ -21,9 +23,14 @@
         <p>Wind Speed: @Model.Wind.Speed m/s</p>
         <p>Wind Direction: @Model.Wind.Deg &deg;</p>
         <p>Visibility: @Model.Visibility m</p>
-        <p>Cloudiness: @Model.Clouds.All %</p>
-        <p>Sunrise: @Model.Sys.Sunrise</p>
-        <p>Sunset: @Model.Sys.Sunset</p>
+        <p>Cloudiness: @Model.Weather.FirstOrDefault()?.Description</p>
+        <p>Sunrise: @Model.Sys.Sunrise.ToLocalTime()</p>
+        <p>Sunset: @Model.Sys.Sunset.ToLocalTime()</p>
+        @if (Model.Rain != null)
+        {
+            <p>Rain (last 1 hour): @Model.Rain.OneHour mm</p>
+            <p>Rain (last 3 hours): @Model.Rain.ThreeHours mm</p>
+        }
     }
 
     @if (!ViewData.ModelState.IsValid)
