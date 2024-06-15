@@ -9,8 +9,92 @@
 <head>
     <meta charset="utf-8" />
     <title>Weather</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+ */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+            form div {
+                margin-bottom: 15px;
+            }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
+    <h1>Weather Forecast</h1>
+
+    <form asp-controller="Weather" method="post" asp-action="GetWeather">
+        <div>
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city" placeholder="Enter city name" />
+        </div>
+        <button type="submit">Get Weather</button>
+    </form>
+
     @if (Model != null)
     {
         <h2>Weather in @Model.Name (@Model.Sys.Country)</h2>
@@ -26,6 +110,7 @@
         <p>Cloudiness: @Model.Weather.FirstOrDefault()?.Description</p>
         <p>Sunrise: @Model.Sys.Sunrise.ToLocalTime()</p>
         <p>Sunset: @Model.Sys.Sunset.ToLocalTime()</p>
+
         @if (Model.Rain != null)
         {
             <p>Rain (last 1 hour): @Model.Rain.OneHour mm</p>
