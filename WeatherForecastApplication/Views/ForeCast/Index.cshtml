@@ -1,0 +1,151 @@
+﻿@model WeatherForecastApplication.Models.ForecastModel
+
+@{
+    ViewData["Title"] = "Weather Forecast";
+}
+
+<h2>Weather Forecast</h2>
+<style>
+    
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        margin-bottom: 20px;
+    }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid #ccc;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<form asp-action="GetWeatherForecast" method="post">
+    <div>
+        <label for="latitude">Latitude:</label>
+        <input type="text" id="latitude" name="latitude" placeholder="Enter latitude" />
+    </div>
+    <div>
+        <label for="longitude">Longitude:</label>
+        <input type="text" id="longitude" name="longitude" placeholder="Enter longitude" />
+    </div>
+    <button type="submit">Get Forecast</button>
+</form>
+
+@if (Model != null)
+{
+    <h3>Current Weather</h3>
+    <p>Temperature: @Model.current_weather?.temperature </p>
+    <p>Windspeed: @Model.current_weather?.windspeed </p>
+    <p>Winddirection: @Model.current_weather?.winddirection </p>
+    <p>Weather Code: @Model.current_weather?.weathercode </p>
+    <p>Time: @Model.current_weather?.time </p>
+
+    <h3>Hourly Forecast</h3>
+    @if (Model.hourly?.time != null && Model.hourly.time.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Temperature (°C)</th>
+                    <th>Windspeed (km/h)</th>
+                    <th>Weather Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.hourly.time.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.hourly.time[i]</td>
+                        <td>@Model.hourly.temperature_2m[i]</td>
+                        <td>@Model.hourly.windspeed_10m[i]</td>
+                        <td>@Model.hourly.weathercode[i]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No hourly data available.</p>
+    }
+
+    <h3>Daily Forecast</h3>
+    @if (Model.daily?.time != null && Model.daily.time.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Max Temperature (°C)</th>
+                    <th>Min Temperature (°C)</th>
+                    <th>Weather Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.daily.time.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.daily.time[i]</td>
+                        <td>@Model.daily.temperature_2m_max[i]</td>
+                        <td>@Model.daily.temperature_2m_min[i]</td>
+                        <td>@Model.daily.weathercode[i]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No daily data available.</p>
+    }
+}

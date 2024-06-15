@@ -12,18 +12,18 @@ namespace WeatherForecastApplication.Controllers
             _httpClient = httpClient;
         }
         [HttpGet]
-        public IActionResult Form()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string city)
+        public async Task<IActionResult> GetWeather(string city)
         {
             if (string.IsNullOrEmpty(city))
             {
                 ModelState.AddModelError(string.Empty, "Please enter a city name.");
-                return View();
+                return View("Index");
             }
 
             string apiKey = "ca0b7d7c84f31afbd4050ecac4490e77"; // <= I have use my key here; You can use your own =>;
@@ -35,12 +35,12 @@ namespace WeatherForecastApplication.Controllers
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
                 WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
-                return View(weatherData);
+                return View("Index",weatherData);
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Could not retrieve weather data. Please try again.");
-                return View();
+                return View("Index");
             }
         }
     }

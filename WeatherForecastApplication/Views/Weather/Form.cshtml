@@ -6,13 +6,66 @@
 <head>
     <meta charset="utf-8" />
     <title>Weather</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        } */
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+            form div {
+                margin-bottom: 15px;
+            }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+    </style>
 </head>
 <body>
-    <h1>Weather Forecast</h1>
+    <h1>Current Weather</h1>
 
     <form asp-controller="Weather" method="post" asp-action="Index">
-        <label for="city">Enter city:</label>
-        <input type="text" id="city" name="city" />
+        <div>
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city" placeholder="Enter city name" />
+        </div>
         <button type="submit">Get Weather</button>
     </form>
 </body>
