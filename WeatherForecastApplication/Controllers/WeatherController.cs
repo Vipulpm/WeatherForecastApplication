@@ -34,6 +34,7 @@ namespace WeatherForecastApplication.Controllers
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
+                System.Diagnostics.Debug.WriteLine("API Response: " + responseBody);
                 WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
                 return View("Index",weatherData);
             }
