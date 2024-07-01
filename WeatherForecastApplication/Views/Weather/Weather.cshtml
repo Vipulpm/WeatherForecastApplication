@@ -1,0 +1,61 @@
+﻿@model WeatherData
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Weather Data";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .weather-data {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            color: #fff;
+        }
+
+            .weather-data div {
+                margin-bottom: 10px;
+            }
+    </style>
+</head>
+<body>
+    <h1>Weather Data</h1>
+
+    <div class="weather-data">
+        @if (Model != null)
+        {
+            <div><strong>City:</strong> @Model.Name</div>
+            <div><strong>Temperature:</strong> @Model.Main.Temp &deg;C</div>
+            <div><strong>Weather:</strong> @Model.Weather.FirstOrDefault()?.Description</div>
+            <div><strong>Humidity:</strong> @Model.Main.Humidity %</div>
+            <div><strong>Wind Speed:</strong> @Model.Wind.Speed m/s</div>
+        }
+        else
+        {
+            <div>No weather data available. Please try again.</div>
+        }
+    </div>
+</body>
+</html>

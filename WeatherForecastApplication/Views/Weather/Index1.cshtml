@@ -1,0 +1,57 @@
+﻿@model WeatherDataModel // Assuming WeatherData is the model you're using to hold weather information
+
+@{
+    ViewData["Title"] = "Weather Data";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Weather Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .weather-data {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+            .weather-data div {
+                margin-bottom: 10px;
+            }
+    </style>
+</head>
+<body>
+    <h1>Weather Data</h1>
+
+    @if (Model != null)
+    {
+        <div class="weather-data">
+            <div><strong>City:</strong> @Model.Name</div>
+            <div><strong>Temperature:</strong> @Model.Main.Temp &deg;C</div>
+            <div><strong>Weather:</strong> @Model.Weather.FirstOrDefault()?.Description</div>
+            <div><strong>Humidity:</strong> @Model.Main.Humidity %</div>
+            <div><strong>Wind Speed:</strong> @Model.Wind.Speed m/s</div>
+        </div>
+    }
+    else
+    {
+        <div class="weather-data">
+            <div>No weather data available. Please try again.</div>
+        </div>
+    }
+</body>
+</html>

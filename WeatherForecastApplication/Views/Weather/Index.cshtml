@@ -1,46 +1,117 @@
-﻿@model WeatherForecastApplication.Models.WeatherData
-@using static WeatherForecastApplication.Extensions.DateTimeExtension
-
-@{
+﻿@{
+    Layout = null;
     ViewData["Title"] = "Weather";
 }
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @@media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            form {
+                padding: 15px;
+            }
+
+            input[type="text"], button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
 </head>
 <body>
-    @if (Model != null)
-    {
-        <h2>Weather in @Model.Name (@Model.Sys.Country)</h2>
-        <p>Temperature: @Model.Main.Temp &deg;C</p>
-        <p>Feels Like: @Model.Main.FeelsLike &deg;C</p>
-        <p>Min Temperature: @Model.Main.TempMin &deg;C</p>
-        <p>Max Temperature: @Model.Main.TempMax &deg;C</p>
-        <p>Pressure: @Model.Main.Pressure hPa</p>
-        <p>Humidity: @Model.Main.Humidity %</p>
-        <p>Wind Speed: @Model.Wind.Speed m/s</p>
-        <p>Wind Direction: @Model.Wind.Deg &deg;</p>
-        <p>Visibility: @Model.Visibility m</p>
-        <p>Cloudiness: @Model.Weather.FirstOrDefault()?.Description</p>
-        <p>Sunrise: @Model.Sys.Sunrise.ToLocalTime()</p>
-        <p>Sunset: @Model.Sys.Sunset.ToLocalTime()</p>
-        @if (Model.Rain != null)
-        {
-            <p>Rain (last 1 hour): @Model.Rain.OneHour mm</p>
-            <p>Rain (last 3 hours): @Model.Rain.ThreeHours mm</p>
-        }
-    }
+    <h1>Weather Forecast</h1>
 
     @if (!ViewData.ModelState.IsValid)
     {
-        <ul>
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-            {
-                <li>@error.ErrorMessage</li>
-            }
-        </ul>
+        <div style="color: red;">Please enter a city name or coordinates.</div>
     }
+
+    <form asp-controller="Weather" method="post" asp-action="GetWeather">
+        <div>
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city" placeholder="Enter city name" />
+        </div>
+        <div>
+            <label for="district">Enter district (optional):</label>
+            <input type="text" id="district" name="district" placeholder="Enter district name" />
+        </div>
+        <div>
+            <label for="latitude">Latitude (optional):</label>
+            <input type="text" id="latitude" name="latitude" placeholder="Enter latitude" />
+        </div>
+        <div>
+            <label for="longitude">Longitude (optional):</label>
+            <input type="text" id="longitude" name="longitude" placeholder="Enter longitude" />
+        </div>
+        <button type="submit">Get Weather</button>
+    </form>
 </body>
 </html>
